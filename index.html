@@ -46,15 +46,21 @@
         displayDataName();
 
         //when you submit a new artist name, it adds it to the array
-        function submitNewArtist() {
-            $("#artist-searched").empty();
-            $("#add-artist").on("click", function (event) {
-                html += "<button>" + $("#artist-input").val().trim() + "</button>";
-                $("#artist-searched").html(html);
-            });
 
-        submitNewArtist ();
-        };
+
+        $("#add-artist").on("click", function (event) {
+
+            var artistInput = $("#artist-input").val().trim();
+            //checks to see if artist already exists in string
+            //if false then adds a button in the array
+            if (html.includes(artistInput) == false) {
+                html += "<button>" + artistInput + "</button>";
+                $("#artist-searched").html(html);
+            }
+        });
+
+  // do stuff
+
 
     </script>
 
