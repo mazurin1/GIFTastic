@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>Favorite Bands</title>
+</head>
+<style>
+    p>q {
+        color: rgb(9, 128, 255)
+    }
+</style>
+
+<body>
+
+    <h1>Whos your favorite artist?</h1>
+    <p><q>Music is life itself. What would this world be without good music? No matter what kind it is.</q> <br>Louis
+        Armstrong</p>
+    <!-- artist searched goes here -->
+    <div id="artist-searched"></div>
+    <br>
+    <div id="movie-form">
+        My favorite artist is:
+        <input id="artist-input" type="text">
+        <br>
+        <!-- //submit button -->
+        <input id="add-artist" type="submit" value="Search">
+    </div>
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script type="text/javascript">
+
+        var artists = ["System of a Down", "Coldplay", "The Vampire Weekend", "The xx", "Deadmau5"];
+        // add a function to display the array and add them as a button
+        var html = "";
+
+        function displayDataName() {
+            var a = "";
+            for (var i = 0; i < artists.length; i++) {
+                html += "<button>" + artists[i] + "</button>";
+            }
+            $("#artist-searched").html(html);
+        }
+
+        displayDataName();
+
+        //when you submit a new artist name, it adds it to the array
+        function submitNewArtist() {
+            $("#artist-searched").empty();
+            $("#add-artist").on("click", function (event) {
+                html += "<button>" + $("#artist-input").val().trim() + "</button>";
+                $("#artist-searched").html(html);
+            });
+
+        submitNewArtist ();
+        };
+
+    </script>
+
+</body>
+
+</html>
