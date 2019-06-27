@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Favorite Bands</title>
+</head>
+
+<style>
+    p>q {
+        color: rgb(193, 13, 46)
+    }
+
+    #movie-form {
+        float: right;
+        padding-right: 60px;
+        width: 80%;
+    }
+
+    body {
+        padding-left: 60px;
+        padding-top: 5px;
+    }
+</style>
+
+<body>
+
+    <h1>Whos your favorite artist?</h1>
+    <p><q>Music is life itself. What would this world be without good music? No matter what kind it is.</q> <br>Louis
+        Armstrong</p>
+    <!-- artist searched goes here -->
+
+    <div id="artist-searched"></div>
+    <br>
+    <div id="movie-form">
+        My favorite artist is:
+        <input id="artist-input" type="text">
+        <br>
+        <!-- //submit button -->
+        <input id="add-artist" type="submit" value="Search">
+    </div>
+
+    <div id="gifs-goes-here"></div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script type="text/javascript">
+
+        var artists = ["System of a Down", "Coldplay", "The Vampire Weekend", "Pink Floyd", "Deadmau5"];
+        // add a function to display the array and add them as a button
+        var html = "";
+
+        function displayDataName() {
+            var a = "";
+            for (var i = 0; i < artists.length; i++) {
+                html += "<button>" + artists[i] + "</button>";
+            }
+            $("#artist-searched").html(html);
+        }
+
+        displayDataName();
+
+        //when you submit a new artist name, it adds it to the array
+        $("#add-artist").on("click", function (event) {
+
+            var artistInput = $("#artist-input").val().trim();
+            //checks to see if artist already exists in string
+            //if false then adds a button in the array
+            if (html.includes(artistInput) == false) {
+                html += "<button>" + artistInput + "</button>";
+                $("#artist-searched").html(html);
+                console.log(artistInput);
+            }
+
+            makeClick(); //call function to show gif images for searched artists
+        });
+
+        // giphy API
+        // anytime you click on the button, run the function
+        function makeClick() {
+        $("button").on("click", function () {
+            var bands = $(this).html(); //"$(this)" grabs the thing you clicked on, and selects the attribute "data-person"
+            var queryURL = 'http://api.giphy.com/v1/gifs/search?q=' + bands + '&api_key=0ormaOwOsFLkwkZsbRTNrmFoxoSfn5XR';
+
+            $.ajax({       //ajax code to send the request to data to url
+                url: queryURL,
+                method: "GET"
+            })
+
+                //after sending the request(then), when the request comes back(response), run this function
+                .then(function (response) {
+                    
+                    var results = response.data;    //response comes out as an array
+                    for (var i = 0; i < results.length; i++) {    //loop through an array
+                        var gifDiv = $("<div>");    //creates a div for the gif
+                        var bandImage = $("<img>");   //creates an image, but in lala land
+
+                        //actually makes the image to show on image
+                        //setting src attribute and alt attribute for our image that is
+                        //currently in lala land
+                        bandImage.attr("src", results[i].images.fixed_height.url);
+                        gifDiv.prepend(bandImage);
+
+                        $("#gifs-goes-here").prepend(gifDiv);
+                    }
+                });
+        });
+        }
+
+        makeClick();
+
+    </script>
+
+</body>
+
+</html>
