@@ -1,2 +1,2 @@
-# GIFTastic
+# GIFPHY Fantastic
 use Giphy API
